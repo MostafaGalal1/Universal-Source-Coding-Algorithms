@@ -1,3 +1,5 @@
+import time
+
 from utils import interval_zooming, read_file, write_file
 
 
@@ -27,11 +29,16 @@ class ArithmeticEncoder:
         self.data_file_path = data_file_path
 
     def encode(self):
+        start_time = time.time()
+
         data = read_file(self.data_file_path)
         PMF, CDF = create_probability_model(data)
         encoded_data = interval_zooming(encoding=True, data=data, PMF=PMF, CDF=CDF)
         write_meta_file(self.data_file_path, PMF, CDF)
         write_file(self.data_file_path, 'arth', encoded_data)
+
+        end_time = time.time()
+        print(f"Encoding time: {end_time - start_time:.2f} seconds")
 
 
 if __name__ == '__main__':

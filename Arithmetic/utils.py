@@ -11,8 +11,7 @@ def read_file(file_path: str):
 
 def write_file(file_path: str, extension: str, data:  bytearray):
     with open(file_path + '.' + extension, 'wb') as f:
-        for byte in data:
-            f.write(bytes([byte]))
+        f.write(data)
 
 
 def interval_zooming(encoding, data, PMF, CDF):

@@ -1,3 +1,5 @@
+import time
+
 from utils import interval_zooming, read_file, write_file
 
 
@@ -26,10 +28,15 @@ class ArithmeticDecoder:
         self.output_file_path = code_file_path.rsplit('.', 2)[0]
 
     def decode(self):
+        start_time = time.time()
+
         data = read_file(self.code_file_path)
         PMF, CDF, extension = read_meta_file(self.code_file_path)
         decoded_data = interval_zooming(encoding=False, data=data, PMF=PMF, CDF=CDF)
         write_file(self.output_file_path + '_decoded', extension, decoded_data)
+
+        end_time = time.time()
+        print(f"Decoding time: {end_time - start_time:.2f} seconds")
 
 
 if __name__ == '__main__':
